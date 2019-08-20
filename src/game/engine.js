@@ -47,6 +47,7 @@ class Engine {
             }
 
             //do drawing here
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
             this.objs.forEach((obj, idx) => {
                     obj.update(this, dt);
                     obj.draw(this.ctx, this.canvas);
