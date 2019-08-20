@@ -1,5 +1,7 @@
-// import GameObject from './game_object';
+import GameObject from './game_object';
+import Player from '../characters/player';
 import Input from './input';
+import Box from './box';
 
 class Engine {
     constructor() {
@@ -11,14 +13,15 @@ class Engine {
         this.ctx.imageSmoothingEnabled = false;
 
         //clears canvas
-        // this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        // this.phyDebug = false;
+        this.phyDebug = false;
 
         this.lastTime = new Date().getTime();
 
         //
         this.objs = [];
+        this.colliders = [];
 
         //stores key inputs
         this.input = new Input;
@@ -28,13 +31,23 @@ class Engine {
     }
 
     addObject(obj) {
-        this.objs.push(obj);
-        // if (obj instanceof GameObject) {
-        //     this.objs.push(obj);
-        // }
-        // else {
-        //     console.error("Invalid object added")
-        // }
+        if (obj instanceof GameObject) {
+            this.objs.push(obj);
+        }
+        else if (obj instanceof Box) {
+            this.colliders.push(obj);
+        }
+    }
+
+    getCollision(x, y) {
+        let value = false;
+        this.colliders.forEach(collider => {
+            let result = collider.isInside(x, y);
+            if (result === true) {
+                value = collider;
+            }
+        });
+        return value;
     }
 
     loop() {
@@ -48,9 +61,14 @@ class Engine {
 
             //do drawing here
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            
             this.objs.forEach((obj, idx) => {
                     obj.update(this, dt);
                     obj.draw(this.ctx, this.canvas);
+            });
+
+            this.colliders.forEach((obj, idx) => {
+                obj.draw(this.ctx, this.canvas);
             });
 
             this.lastTime = time;
