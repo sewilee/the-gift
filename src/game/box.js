@@ -6,7 +6,7 @@ class Box{
         this.w = w;
     }
 
-    isInside(x, y, w = 0, h = 0) {
+    isInside(x, y, w, h) {
         let inX = ((this.x + this.w) > x) && (this.x < (x + w));
         let inY = ((this.y + this.h) > y) && (this.y < (y + h));
         // let inX = (this.x < x && x < (this.x + this.w));
@@ -17,7 +17,6 @@ class Box{
 
     draw(ctx) {
         ctx.strokeStyle = "red";
-        // ctx.strokeRect(20, 20, 150, 100);
         ctx.strokeRect(this.x, this.y, this.w, this.h);
     }
 }

@@ -39,10 +39,10 @@ class Engine {
         }
     }
 
-    getCollision(x, y) {
+    getCollision(x, y, w, h) {
         let value = false;
         this.colliders.forEach(collider => {
-            let result = collider.isInside(x, y);
+            let result = collider.isInside(x, y, w, h);
             if (result === true) {
                 value = collider;
             }

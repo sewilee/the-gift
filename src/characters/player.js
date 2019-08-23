@@ -36,14 +36,22 @@ class Player extends GameObject {
     }
 
     translate(x, y) {
-
-        let pX = x + this.position[0] + this.renderables[0].subWidth;
-        let pY = y + this.position[1] + this.renderables[0].subHeight;
         // debugger
+        let pX = x + this.position[0];
+        let pY = y + this.position[1];
 
-        let collider = this.engine.getCollision(pX, pY);
+        let subWidth = this.renderables[0].subWidth;
+        let subHeight = this.renderables[0].subWHeight
+        // debugger
+        // debugger
+        if(this.position[0] > 400){
+            debugger
+        }
+
+        let collider = this.engine.getCollision(pX, pY, subWidth, subHeight);
 
         if(collider){
+            // debugger
             x = 0;
             y = 0;
             this.jumped = false;
@@ -64,6 +72,7 @@ class Player extends GameObject {
     }
 
     draw(ctx) {
+        // console.log(this.position);
         // debugger
         super.draw(ctx);
 

@@ -11,6 +11,7 @@ class Game {
         let engine = new Engine();
 
         let floor = new Box(0, 475, engine.canvas.width, 25)
+        // debugger
         engine.addObject(floor);
 
         let player = new Player(0, 400, engine, [0,0]);
