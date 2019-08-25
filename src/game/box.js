@@ -6,12 +6,11 @@ class Box{
         this.w = w;
     }
 
-    isInside(x, y, w, h) {
-        let inX = ((this.x + this.w) > x) && (this.x < (x + w));
-        let inY = ((this.y + this.h) > y) && (this.y < (y + h));
-        // let inX = (this.x < x && x < (this.x + this.w));
-        // let inY = (this.y < y && y < (this.y + this.h));
+    isInside(cX, cY, cW, cH) {
 
+        let inX = (cX + cW >= this.x) && (cX <= this.x + this.w);
+        let inY = (cY + cH >= this.y) && (cY <= this.y + this.h);
+        // debugger
         return inX && inY;
     }
 

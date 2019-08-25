@@ -41,15 +41,10 @@ class Player extends GameObject {
         let pY = y + this.position[1];
 
         let subWidth = this.renderables[0].subWidth;
-        let subHeight = this.renderables[0].subWHeight
-        // debugger
-        // debugger
-        if(this.position[0] > 400){
-            debugger
-        }
-
+        let subHeight = this.renderables[0].subHeight
+        
         let collider = this.engine.getCollision(pX, pY, subWidth, subHeight);
-
+        
         if(collider){
             // debugger
             x = 0;

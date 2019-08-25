@@ -1,6 +1,7 @@
 import Engine from './engine.js';
 import Player from '../characters/player.js';
 import Box from './box.js';
+import { createStageOne } from '../utils/create';
 
 class Game {
     constructor() {
@@ -11,8 +12,10 @@ class Game {
         let engine = new Engine();
 
         let floor = new Box(0, 475, engine.canvas.width, 25)
+        let platform = new Box(257, 400, 100, 10)
         // debugger
         engine.addObject(floor);
+        engine.addObject(platform);
 
         let player = new Player(0, 400, engine, [0,0]);
         engine.addObject(player);
