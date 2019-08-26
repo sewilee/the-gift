@@ -36,7 +36,6 @@ class Player extends GameObject {
     }
 
     translate(x, y) {
-        // debugger
         let pX = x + this.position[0];
         let pY = y + this.position[1];
 
@@ -46,7 +45,6 @@ class Player extends GameObject {
         let collider = this.engine.getCollision(pX, pY, subWidth, subHeight);
         
         if(collider){
-            // debugger
             x = 0;
             y = 0;
             this.jumped = false;
@@ -67,8 +65,6 @@ class Player extends GameObject {
     }
 
     draw(ctx) {
-        // console.log(this.position);
-        // debugger
         super.draw(ctx);
 
         this.gravity();

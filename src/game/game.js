@@ -1,7 +1,10 @@
 import Engine from './engine.js';
 import Player from '../characters/player.js';
-import Box from './box.js';
-import { createStageOne } from '../utils/create';
+// import Box from './box.js';
+import Camera from './camera';
+import GameMap from '../map/map';
+
+const mapJson = require('../../asset/sprites/maps/stage_01.json');
 
 class Game {
     constructor() {
@@ -11,22 +14,19 @@ class Game {
     run() {
         let engine = new Engine();
 
-        let floor = new Box(0, 475, engine.canvas.width, 25)
-        let platform = new Box(257, 400, 100, 10)
-        // debugger
-        engine.addObject(floor);
-        engine.addObject(platform);
+        let camera = new Camera([document.getElementById("canvas").width, document.getElementById("canvas").height], [0, 0]);
 
-        let player = new Player(0, 400, engine, [0,0]);
+        // engine.phyDebug = true;
+        let map = new GameMap(mapJson, "asset/sprites/maps/gift_tileset.png", camera);
+        engine.addObject(map);
+        engine.addColliders(map.getColliders());
+
+        engine.offset = camera.offset;
+
+        let player = new Player(0, 0, engine, engine.offset);
         engine.addObject(player);
 
         engine.update = (dt) => {
-            // if (engine.input.isKeyPressed("ArrowUp")) {
-            //     console.log("up")
-            // }
-            // if (engine.input.isKeyPressed("ArrowDown")) {
-            //     console.log("down")
-            // }
             if (engine.input.isKeyPressed("ArrowLeft")) {
                 player.translate(-150 * dt, 0);
                 player.facing = 0;

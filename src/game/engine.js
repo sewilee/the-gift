@@ -34,9 +34,14 @@ class Engine {
         if (obj instanceof GameObject) {
             this.objs.push(obj);
         }
-        else if (obj instanceof Box) {
-            this.colliders.push(obj);
-        }
+    }
+
+    addColliders(colliders) {
+        colliders.forEach(collider => {
+            if (collider instanceof Box) {
+                this.colliders.push(collider);
+            }
+        });
     }
 
     getCollision(x, y, w, h) {
@@ -61,7 +66,7 @@ class Engine {
 
             //do drawing here
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            
+            // debugger
             this.objs.forEach((obj, idx) => {
                     obj.update(this, dt);
                     obj.draw(this.ctx, this.canvas);
