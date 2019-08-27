@@ -16,13 +16,17 @@ class Player extends GameObject {
         this.facing = 0;
         this.lastFace = this.facing;
 
-        const img = "asset/sprites/Kq0m7RP.png";
+        const img = "asset/sprites/characters/bunny_player.png";
+        const sheetWidth = 448;
+        const sheetHeight = 128;
+        const cols = 7;
+        const rows = 1;
 
         this.renderables = [
-            new Sprite(img, 144, 192, 3, 4, 3, 2, 13), //left
-            new Sprite(img, 144, 192, 3, 4, 3, 0, 13), //left still
-            new Sprite(img, 144, 192, 3, 4, 6, 2, 13), //right
-            new Sprite(img, 144, 192, 3, 4, 6, 0, 13), //right still
+            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 0, 6, 25), //left
+            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 0, 0, 15), //left still
+            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 0, 6, 25), //right
+            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 0, 0, 15), //right still
         ]
     }
 
@@ -40,7 +44,7 @@ class Player extends GameObject {
         let pY = y + this.position[1];
 
         let subWidth = this.renderables[0].subWidth;
-        let subHeight = this.renderables[0].subHeight
+        let subHeight = this.renderables[0].subHeight;
         
         let collider = this.engine.getCollision(pX, pY, subWidth, subHeight);
         
