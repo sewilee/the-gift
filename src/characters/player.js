@@ -2,11 +2,11 @@ import Sprite from '../game/sprite';
 import GameObject from '../game/game_object';
 
 class Player extends GameObject {
-    constructor(x, y, engine, offset) {
+    constructor(x, y, engine) {
         super();
         this.position = [x, y];
         this.engine = engine;
-        this.offset = offset;
+        // this.offset = offset;
 
         this.jumped = false;
 
@@ -53,8 +53,6 @@ class Player extends GameObject {
         super.translate(x, y);
     }
 
-
-
     gravity(){
         if(this.jumpVelcity > 0){
             this.jumpVelcity--
@@ -70,8 +68,8 @@ class Player extends GameObject {
         this.gravity();
 
         ctx.save();
-        ctx.strokeRect(this.position[0], this.position[1], 48, 48);
-        ctx.translate(this.position[0] + this.offset[0], this.position[1] + this.offset[1]);
+        // ctx.strokeRect(this.position[0], this.position[1], 48, 48);
+        ctx.translate(this.position[0], + this.position[1]);
 
         // if (this.currentHealth < this.prevHealth) {
         //     this.renderables[this.facing].draw(ctx);

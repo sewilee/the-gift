@@ -3,14 +3,15 @@ import Sprite from "../game/sprite";
 import Box from "../game/box";
 
 class GameMap extends GameObject {
-    constructor(mapJSON, mapImg, camera) {
+    constructor(mapJSON, mapImg) {
         super();
         this.scale = 1;
-        this.renderable = new Sprite(mapImg, 832, 1000, 13, 15, 0, 550, 0, this.scale);
+        this.renderable = new Sprite(mapImg, 832, 1000, 13, 15, 0, 1000, 0, this.scale);
         this.data = mapJSON;
         this.colliders = [];
         this.safeZone = null;
-        this.camera = camera;
+        this.position = [0, 0];
+        // this.camera = camera;
 
         if (this.data) {
             this.data.layers.forEach(layer => {
@@ -35,17 +36,16 @@ class GameMap extends GameObject {
     }
 
     draw(ctx) {
-        const { offset } = this.camera
+        // const { offset } = this.camera
         this.data.layers.forEach(layer => {
             if (layer.type === "tilelayer") {
-                // debugger
                 for (let y = 0; y < this.data.height; y++) {
                     for (let x = 0; x < this.data.width; x++) {
                         this.renderable.frame = layer.data[(y * this.data.height) + x] - 1;
                         ctx.save();
                         ctx.translate(
-                            offset[0] + this.position[0] + x * this.renderable.subWidth * this.renderable.scale,
-                            offset[1] + this.position[1] + y * this.renderable.subHeight * this.renderable.scale
+                            this.position[0] + x * this.renderable.subWidth * this.renderable.scale,
+                            this.position[1] + y * this.renderable.subHeight * this.renderable.scale
                         );
 
                         this.renderable.draw(ctx);

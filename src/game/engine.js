@@ -15,6 +15,7 @@ class Engine {
         //clears canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+        //showing collisions
         this.phyDebug = false;
 
         this.lastTime = new Date().getTime();
