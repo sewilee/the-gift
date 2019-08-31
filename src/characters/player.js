@@ -30,7 +30,7 @@ class Player extends GameObject {
             new Sprite(img, sheetWidth, sheetHeight, cols, rows, 0, 6, 25, scale), //left
             new Sprite(img, sheetWidth, sheetHeight, cols, rows, 7, 6, 25, scale), //right
             new Sprite(img, sheetWidth, sheetHeight, cols, rows, 14, 6, 2, scale), //still
-            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 21, 0, 1, scale), //falling
+            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 21, 1, 5, scale), //falling
         ]
     }
 
@@ -60,7 +60,7 @@ class Player extends GameObject {
             this.jumpY = null;
         }
 
-        if(this.jumpY && this.position[1] > this.jumpY + 5){
+        if(this.jumpY && this.position[1] > this.jumpY + 1){
             // debugger
             this.falling = true;
         }
