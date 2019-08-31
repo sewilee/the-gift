@@ -33,15 +33,16 @@ class Game {
             }
             if (engine.input.isKeyPressed("ArrowRight")) {
                 player.translate(150 * dt, 0);
-                player.facing = 2;
-                player.lastFace = 2;
+                player.facing = 1;
+                player.lastFace = 1;
             }
             if (engine.input.isKeyPressed("Space")){
                 player.jump();
             }
             if (!engine.input.isKeyPressed("ArrowLeft") && 
             !engine.input.isKeyPressed("ArrowRight")){
-                player.facing = player.lastFace + 1;
+                player.facing = 2;
+                player.lastFace = 2;
             }
         };
     }

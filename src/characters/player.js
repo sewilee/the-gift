@@ -18,17 +18,16 @@ class Player extends GameObject {
 
         const img = "asset/sprites/characters/bunny_player.png";
         const sheetWidth = 448;
-        const sheetHeight = 160;
+        const sheetHeight = 240;
         const cols = 7;
-        const rows = 2;
+        const rows = 3;
         const scale = 1;
 
 
         this.renderables = [
             new Sprite(img, sheetWidth, sheetHeight, cols, rows, 0, 6, 25, scale), //left
-            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 0, 0, 15, scale), //left still
             new Sprite(img, sheetWidth, sheetHeight, cols, rows, 7, 6, 25, scale), //right
-            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 7, 0, 15, scale), //right still
+            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 14, 6, 2, scale), //still
         ]
     }
 
