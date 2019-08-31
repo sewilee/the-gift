@@ -9,12 +9,14 @@ class Player extends GameObject {
         // this.offset = offset;
 
         this.jumped = false;
+        this.jumpY = null;
 
         this.gravitySpeed = 5;
         this.jumpVelcity = 0;
 
         this.facing = 0;
         this.lastFace = this.facing;
+        this.falling = false;
 
         const img = "asset/sprites/characters/bunny_player.png";
         const sheetWidth = 448;
@@ -28,6 +30,7 @@ class Player extends GameObject {
             new Sprite(img, sheetWidth, sheetHeight, cols, rows, 0, 6, 25, scale), //left
             new Sprite(img, sheetWidth, sheetHeight, cols, rows, 7, 6, 25, scale), //right
             new Sprite(img, sheetWidth, sheetHeight, cols, rows, 14, 6, 2, scale), //still
+            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 21, 0, 1, scale), //falling
         ]
     }
 
@@ -53,6 +56,13 @@ class Player extends GameObject {
             x = 0;
             y = 0;
             this.jumped = false;
+            this.falling = false;
+            this.jumpY = null;
+        }
+
+        if(this.jumpY && this.position[1] > this.jumpY + 5){
+            // debugger
+            this.falling = true;
         }
 
         super.translate(x, y);
@@ -61,8 +71,10 @@ class Player extends GameObject {
     gravity(){
         if(this.jumpVelcity > 0){
             this.jumpVelcity--
+            // this.falling = true;
         } else {
             this.jumpVelcity = 0;
+            // this.falling = false;
         }
         this.translate(0, this.gravitySpeed - this.jumpVelcity);
     }

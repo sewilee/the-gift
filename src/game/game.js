@@ -39,7 +39,10 @@ class Game {
             if (engine.input.isKeyPressed("Space")){
                 player.jump();
             }
-            if (!engine.input.isKeyPressed("ArrowLeft") && 
+            if (player.falling){
+                player.facing = 3;
+            }
+            else if (!engine.input.isKeyPressed("ArrowLeft") && 
             !engine.input.isKeyPressed("ArrowRight")){
                 player.facing = 2;
                 player.lastFace = 2;
