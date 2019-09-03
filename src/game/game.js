@@ -38,6 +38,7 @@ class Game {
             }
             if (engine.input.isKeyPressed("Space")){
                 player.jump();
+                // debugger
             }
             if (player.falling){
                 player.facing = 3;

@@ -9,7 +9,7 @@ class Player extends GameObject {
         // this.offset = offset;
 
         this.jumped = false;
-        this.jumpY = null;
+        this.fallY = null;
 
         this.gravitySpeed = 5;
         this.jumpVelcity = 0;
@@ -17,6 +17,7 @@ class Player extends GameObject {
         this.facing = 0;
         this.lastFace = this.facing;
         this.falling = false;
+        this.collided = false;
 
         const img = "asset/sprites/characters/bunny_player.png";
         const sheetWidth = 448;
@@ -36,7 +37,7 @@ class Player extends GameObject {
 
     jump(){
         if(this.jumped === false){
-            this.jumpY = this.position[1];
+            this.fallY = this.position[1];
             this.jumped = true;
             this.jumpVelcity = 15;
             this.translate(0, -50);
@@ -50,18 +51,20 @@ class Player extends GameObject {
         let subWidth = this.renderables[0].subWidth;
         let subHeight = this.renderables[0].subHeight;
         
+        this.collided = false;
         let collider = this.engine.getCollision(pX, pY, subWidth, subHeight);
         
         if(collider){
+            // debugger
             x = 0;
             y = 0;
             this.jumped = false;
             this.falling = false;
-            this.jumpY = null;
+            this.fallY = null;
+            this.collided = true;
         }
 
-        if(this.jumpY && this.position[1] > this.jumpY + 1){
-            // debugger
+        if(this.fallY && this.position[1] > this.fallY + 5){
             this.falling = true;
         }
 
@@ -69,13 +72,24 @@ class Player extends GameObject {
     }
 
     gravity(){
+        const currentTime = new Date().getTime();
+        // this.lastTime = currentTime;
+        
+        if(this.collided){
+            this.falling = false;
+            this.fallY = null;
+        } else if(!this.jumped && currentTime > this.lastTime + 500) {
+            // debugger
+            this.lastTime = currentTime;
+            this.fallY = this.position[1];
+        }
+
         if(this.jumpVelcity > 0){
             this.jumpVelcity--
-            // this.falling = true;
         } else {
             this.jumpVelcity = 0;
-            // this.falling = false;
         }
+
         this.translate(0, this.gravitySpeed - this.jumpVelcity);
     }
 
