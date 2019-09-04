@@ -36,9 +36,9 @@ class Game {
                 player.facing = 1;
                 player.lastFace = 1;
             }
-            if (engine.input.isKeyPressed("Space")){
-                player.jump();
+            if (engine.input.keysPressed.repeat !== "Space" && engine.input.isKeyPressed("Space")){
                 // debugger
+                player.jump();
             }
             if (player.falling){
                 player.facing = 3;
