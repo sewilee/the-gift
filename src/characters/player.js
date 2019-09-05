@@ -19,19 +19,25 @@ class Player extends GameObject {
         this.falling = false;
         this.collided = false;
 
-        const img = "asset/sprites/characters/bunny_player.png";
-        const sheetWidth = 448;
-        const sheetHeight = 240;
-        const cols = 7;
-        const rows = 3;
+        this.createSprites();
+    }
+    
+    createSprites(){
+        const moveImg = "asset/sprites/characters/bunny_player_moves.png";
         const scale = 1;
 
-
+        const moveW = 280;
+        const moveH = 320;
+        const moveCol = 7;
+        const moveRow = 4;
+    
         this.renderables = [
-            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 0, 6, 25, scale), //left
-            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 7, 6, 25, scale), //right
-            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 14, 6, 2, scale), //still
-            new Sprite(img, sheetWidth, sheetHeight, cols, rows, 21, 1, 5, scale), //falling
+            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 0, 6, 25, scale), //0 left
+            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 7, 6, 25, scale), //1 right
+            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 14, 6, 2, scale), //2 still with cookie
+            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 23, 1, 2, scale), //3 standing left
+            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 21, 1, 2, scale), //4 standing right
+            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 25, 1, 5, scale), //5 falling
         ]
     }
 
@@ -56,8 +62,10 @@ class Player extends GameObject {
         
         if(collider){
             if(this.position[1] > collider.y + collider.h){
-                // debugger
                 y = 0;
+            } else if(  this.position[0] > collider.x + collider.w || 
+                        this.position[0] + subWidth < collider.x) {
+                x = 0;
             } else {
                 x = 0;
                 y = 0;
@@ -68,7 +76,7 @@ class Player extends GameObject {
             }
         }
 
-        if(this.fallY && this.position[1] > this.fallY + 5){
+        if(this.fallY && this.position[1] > this.fallY + 80){
             this.falling = true;
         }
 
@@ -77,13 +85,11 @@ class Player extends GameObject {
 
     gravity(){
         const currentTime = new Date().getTime();
-        // this.lastTime = currentTime;
         
         if(this.collided){
             this.falling = false;
             this.fallY = null;
         } else if(!this.jumped && currentTime > this.lastTime + 500) {
-            // debugger
             this.lastTime = currentTime;
             this.fallY = this.position[1];
         }
@@ -105,13 +111,6 @@ class Player extends GameObject {
         ctx.save();
         // ctx.strokeRect(this.position[0], this.position[1], 48, 48);
         ctx.translate(this.position[0], + this.position[1]);
-
-        // if (this.currentHealth < this.prevHealth) {
-        //     this.renderables[this.facing].draw(ctx);
-        //     this.prevHealth = this.currentHealth;
-        // } else {
-        //     this.renderables[this.facing].draw(ctx)
-        // }
 
         this.renderables[this.facing].draw(ctx)
 

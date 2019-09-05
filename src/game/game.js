@@ -29,19 +29,19 @@ class Game {
             if (engine.input.isKeyPressed("ArrowLeft")) {
                 player.translate(-150 * dt, 0);
                 player.facing = 0;
-                player.lastFace = 0;
+                player.lastFace = 3;
             }
             if (engine.input.isKeyPressed("ArrowRight")) {
                 player.translate(150 * dt, 0);
                 player.facing = 1;
-                player.lastFace = 1;
+                player.lastFace = 4;
             }
             if (engine.input.keysPressed.repeat !== "Space" && engine.input.isKeyPressed("Space")){
                 // debugger
                 player.jump();
             }
             if (player.falling){
-                player.facing = 3;
+                player.facing = 5;
             }
             else if (!engine.input.isKeyPressed("ArrowLeft") && 
             !engine.input.isKeyPressed("ArrowRight")){
