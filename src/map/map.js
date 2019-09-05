@@ -6,27 +6,21 @@ class GameMap extends GameObject {
     constructor(mapJSON, mapImg) {
         super();
         this.scale = 1;
-        this.renderable = new Sprite(mapImg, 832, 1000, 13, 15, 0, 1000, 0, this.scale);
+        this.renderable = new Sprite(mapImg, 640, 640, 20, 20, 0, 1600, 0, this.scale);
         this.data = mapJSON;
         this.colliders = [];
         this.safeZone = null;
         this.position = [0, 0];
-        // this.camera = camera;
+        this.camera = {offset: [0, 0]};
 
         if (this.data) {
             this.data.layers.forEach(layer => {
-                if (layer.name === "Collision") {
+                if (layer.name === "collisions") {
                     layer.objects.forEach(obj => {
-                        // debugger
                         this.colliders.push(
                             new Box(obj.x * this.scale, obj.y * this.scale, obj.width * this.scale, obj.height * this.scale));
                     });
                 }
-                // if (layer.name === "SafeZone") {
-                //     layer.objects.forEach(obj => {
-                //         this.safeZone = new Box(obj.x * this.scale, obj.y * this.scale, obj.height * this.scale, obj.width * this.scale);
-                //     });
-                // }
             });
         }
     }
@@ -36,7 +30,7 @@ class GameMap extends GameObject {
     }
 
     draw(ctx) {
-        // const { offset } = this.camera
+        const { offset } = this.camera
         this.data.layers.forEach(layer => {
             if (layer.type === "tilelayer") {
                 for (let y = 0; y < this.data.height; y++) {
@@ -44,8 +38,8 @@ class GameMap extends GameObject {
                         this.renderable.frame = layer.data[(y * this.data.height) + x] - 1;
                         ctx.save();
                         ctx.translate(
-                            this.position[0] + x * this.renderable.subWidth * this.renderable.scale,
-                            this.position[1] + y * this.renderable.subHeight * this.renderable.scale
+                            offset[0] + this.position[0] + x * this.renderable.subWidth * this.renderable.scale,
+                            offset[1] + this.position[1] + y * this.renderable.subHeight * this.renderable.scale
                         );
 
                         this.renderable.draw(ctx);

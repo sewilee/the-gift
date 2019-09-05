@@ -1,10 +1,9 @@
 import Engine from './engine.js';
 import Player from '../characters/player.js';
-// import Box from './box.js';
 // import Camera from './camera';
 import GameMap from '../map/map';
 
-const mapJson = require('../../asset/sprites/maps/stage_01.json');
+const mapJson = require('../../asset/sprites/maps/stage01.json');
 
 class Game {
     constructor() {
@@ -16,8 +15,9 @@ class Game {
         // let camera = new Camera([document.getElementById("canvas").width, document.getElementById("canvas").height]);
 
         // engine.phyDebug = true;
-        let map = new GameMap(mapJson, "asset/sprites/maps/gift_tileset.png");
+        let map = new GameMap(mapJson, "asset/sprites/maps/stage-tileset.png");
         engine.addObject(map);
+
         engine.addColliders(map.getColliders());
 
         // engine.offset = camera.offset;
