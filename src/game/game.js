@@ -3,7 +3,7 @@ import Player from '../characters/player.js';
 // import Camera from './camera';
 import GameMap from '../map/map';
 
-const mapJson = require('../../asset/sprites/maps/stage01.json');
+const mapJson = require('../../asset/sprites/maps/testing.json');
 
 class Game {
     constructor() {
