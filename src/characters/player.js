@@ -46,7 +46,7 @@ class Player extends GameObject {
             this.fallY = this.position[1];
             this.jumped = true;
             this.jumpVelcity = 15;
-            this.translate(0, -60);
+            this.translate(0, -55);
         }
     }
 
@@ -76,7 +76,7 @@ class Player extends GameObject {
             }
         }
 
-        if(this.fallY && this.position[1] > this.fallY + 80){
+        if(this.fallY && this.position[1] > this.fallY + 50){
             this.falling = true;
         }
 
@@ -112,7 +112,7 @@ class Player extends GameObject {
         const height = this.renderables[0].subHeight;
         // debugger
         ctx.save();
-        ctx.strokeRect(this.position[0], this.position[1], width, height);
+        // ctx.strokeRect(this.position[0], this.position[1], width, height);
         ctx.translate(this.position[0], + this.position[1]);
 
         this.renderables[this.facing].draw(ctx)

@@ -16,7 +16,7 @@ class Engine {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         //showing collisions
-        this.phyDebug = false;
+        // this.phyDebug = false;
 
         this.lastTime = new Date().getTime();
 
@@ -35,6 +35,12 @@ class Engine {
         if (obj instanceof GameObject) {
             this.objs.push(obj);
         }
+    }
+
+    addItems(items){
+        items.forEach(item => {
+            this.objs.push(item);
+        });
     }
 
     addColliders(colliders) {
