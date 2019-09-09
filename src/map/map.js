@@ -6,7 +6,7 @@ class GameMap extends GameObject {
     constructor(mapJSON, mapImg) {
         super();
         this.scale = 1;
-        this.renderable = new Sprite(mapImg, 640, 640, 20, 20, 0, 1600, 0, this.scale);
+        this.renderable = new Sprite(mapImg, 640, 640, 20, 20, 0, 400, 0, this.scale);
         this.data = mapJSON;
         this.colliders = [];
         this.safeZone = null;
@@ -35,7 +35,7 @@ class GameMap extends GameObject {
             if (layer.type === "tilelayer") {
                 for (let y = 0; y < this.data.height; y++) {
                     for (let x = 0; x < this.data.width; x++) {
-                        this.renderable.frame = layer.data[(y * this.data.height) + x] - 1;
+                        this.renderable.frame = layer.data[(y * this.data.width) + x] - 1;
                         ctx.save();
                         ctx.translate(
                             offset[0] + this.position[0] + x * this.renderable.subWidth * this.renderable.scale,

@@ -7,8 +7,8 @@ class Box{
     }
 
     isInside(cX, cY, cW, cH) {
-        let inX = (cX + cW >= this.x) && (cX <= this.x + this.w);
-        let inY = (cY + cH >= this.y) && (cY <= this.y + this.h);
+        let inX = (cX + cW > this.x) && (cX < this.x + this.w);
+        let inY = (cY + cH > this.y) && (cY < this.y + this.h);
         // debugger
         return inX && inY;
     }

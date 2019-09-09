@@ -46,7 +46,7 @@ class Player extends GameObject {
             this.fallY = this.position[1];
             this.jumped = true;
             this.jumpVelcity = 15;
-            this.translate(0, -50);
+            this.translate(0, -60);
         }
     }
 
@@ -55,7 +55,7 @@ class Player extends GameObject {
         let pY = y + this.position[1];
 
         let subWidth = this.renderables[0].subWidth;
-        let subHeight = this.renderables[0].subHeight;
+        let subHeight = this.renderables[0].subHeight - 5;
         
         this.collided = false;
         let collider = this.engine.getCollision(pX, pY, subWidth, subHeight);
@@ -108,8 +108,11 @@ class Player extends GameObject {
 
         this.gravity();
 
+        const width = this.renderables[0].subWidth;
+        const height = this.renderables[0].subHeight;
+        // debugger
         ctx.save();
-        // ctx.strokeRect(this.position[0], this.position[1], 48, 48);
+        ctx.strokeRect(this.position[0], this.position[1], width, height);
         ctx.translate(this.position[0], + this.position[1]);
 
         this.renderables[this.facing].draw(ctx)
