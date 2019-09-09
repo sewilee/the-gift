@@ -17,14 +17,14 @@ class Game {
         // engine.phyDebug = true;
         let map = new GameMap(mapJson, "asset/sprites/maps/stage-tileset.png");
         engine.addObject(map);
-        engine.addItems(map.getItems());
         engine.addColliders(map.getColliders());
+        engine.addItems(map.getItems());
 
         // engine.offset = camera.offset;
 
         let player = new Player(0, 0, engine);
         engine.addObject(player);
-
+        // debugger
         engine.update = (dt) => {
             if (engine.input.isKeyPressed("ArrowLeft")) {
                 player.translate(-150 * dt, 0);

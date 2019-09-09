@@ -12,7 +12,7 @@ class Item extends GameObject{
         const img = "asset/sprites/items/items.png";
 
         this.renderables = [
-            new Renderable(img, 640, 640, 20, 20, 0, 1, 5) //cookies
+            new Renderable(img, 640, 640, 20, 20, 21, 1, 1) //cookies
         ];
     }
 
@@ -38,7 +38,7 @@ class Item extends GameObject{
         // ctx.strokeRect(this.position[0] + this.offset[0], this.position[1] + this.offset[1], 64, 64);
         
         ctx.translate(this.position[0] + this.offset[0], this.position[1] + this.offset[1]);
-        this.renderables[this.image].draw(ctx);
+        this.renderables[0].draw(ctx);
 
 
         ctx.restore();
