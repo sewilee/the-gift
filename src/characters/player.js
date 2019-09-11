@@ -59,6 +59,7 @@ class Player extends GameObject {
         
         this.collided = false;
         let collider = this.engine.getCollision(pX, pY, subWidth, subHeight);
+        let itemCollide = this.engine.getItems(pX, pY, subWidth, subHeight);
         
         if(collider){
             if(this.position[1] > collider.y + collider.h){
@@ -74,6 +75,10 @@ class Player extends GameObject {
                 this.fallY = null;
                 this.collided = true;
             }
+        }
+
+        if(itemCollide){
+            debugger
         }
 
         if(this.fallY && this.position[1] > this.fallY + 50){

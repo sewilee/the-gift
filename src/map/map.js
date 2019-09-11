@@ -28,8 +28,9 @@ class GameMap extends GameObject {
                 }
                 if (layer.name === "Cookies"){
                     layer.objects.forEach((obj, idx) => {
-                        this.cookies.push(
-                            new Item([obj.x, obj.y], [0, 0], "cookie/1", `cookie_${idx}`));
+                        let speed = idx % 3;
+                        const item = new Item([obj.x, obj.y], [0, 0], "cookie/1", `cookie_${idx}`, speed);
+                        this.cookies.push(item);
                     });
                 }
             });

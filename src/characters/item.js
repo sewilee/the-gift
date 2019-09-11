@@ -2,17 +2,18 @@ import GameObject from '../game/game_object';
 import Renderable from '../game/sprite';
 
 class Item extends GameObject{
-    constructor(position, offset, effect, id){
+    constructor(position, offset, effect, id, speed){
         super();
         this.position = position;
         this.offset = offset;
         this.effect = this.itemEffect(effect);
         this.used = false;
         this.id = id;
+        this.speed = speed;
         const img = "asset/sprites/items/items.png";
 
         this.renderables = [
-            new Renderable(img, 640, 640, 20, 20, 21, 1, 1) //cookies
+            new Renderable(img, 640, 640, 20, 20, 0, 7, this.speed) //cookies
         ];
     }
 
