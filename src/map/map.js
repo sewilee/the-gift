@@ -35,7 +35,7 @@ class GameMap extends GameObject {
                         this.cookies.push(item);
                     });
                 }
-                if (layer.name === "Nextstage" || layer.name === "Prevstage"){
+                if (layer.name === "Nextstage" || layer.name === "Prevstage" || layer.name === "Death"){
                     layer.objects.forEach(obj => {
                         const box = new Box(obj.x * this.scale, obj.y * this.scale, obj.width * this.scale, obj.height * this.scale);
                         box.id = layer.name;

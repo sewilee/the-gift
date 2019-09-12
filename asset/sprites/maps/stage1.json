@@ -87,17 +87,6 @@
                  "y":384
                 }, 
                 {
-                 "height":240,
-                 "id":6,
-                 "name":"",
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":96,
-                 "x":800,
-                 "y":224
-                }, 
-                {
                  "height":16,
                  "id":9,
                  "name":"",
@@ -217,6 +206,17 @@
                  "width":5,
                  "x":891,
                  "y":0
+                }, 
+                {
+                 "height":224,
+                 "id":58,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":96,
+                 "x":800,
+                 "y":224
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -230,15 +230,15 @@
          "name":"Nextstage",
          "objects":[
                 {
-                 "height":64,
-                 "id":26,
+                 "height":96,
+                 "id":59,
                  "name":"",
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":32,
-                 "x":864,
-                 "y":480
+                 "width":16,
+                 "x":880,
+                 "y":448
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -402,7 +402,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":58,
+ "nextobjectid":61,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.4",

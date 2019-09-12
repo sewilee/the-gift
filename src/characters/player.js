@@ -64,7 +64,7 @@ class Player extends GameObject {
         let collider = this.engine.getCollision(pX, pY, subWidth, subHeight);
         let itemCollide = this.engine.getItems(pX, pY, subWidth, subHeight);
         let nextStageCollide = this.engine.getNextStage(pX, pY, subWidth, subHeight);
-        
+
         if(collider){
             if(this.position[1] > collider.y + collider.h){
                 y = 0;

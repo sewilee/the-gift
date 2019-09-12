@@ -21,7 +21,10 @@ export function createNextStage(engine){
     engine.addColliders(map.getColliders());
 
     engine.stage = map.stage;
+
     const { position } = engine.player;
     const y = position[1];
+
     engine.player.position = [pX, y];
+    engine.resetPos = [pX, y];
 }

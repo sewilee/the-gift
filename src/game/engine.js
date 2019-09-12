@@ -26,6 +26,9 @@ class Engine {
         this.objs = [];
         this.map;
         this.player;
+
+        this.resetPos;
+
         this.colliders = [];
         this.items = {};
 
@@ -42,7 +45,17 @@ class Engine {
         this.addObject(this.player);
         this.player.nextStage = false;
 
-        createNextStage(this);
+       return createNextStage(this);
+    }
+
+    resetStage(){
+
+        this.player.position = [this.resetPos[0], this.resetPos[1]];
+        this.player.cookies = 0;
+        this.player.nextStage = false;
+        this.stage = this.map.stage;
+
+        return;
     }
 
     addObject(obj) {
@@ -68,7 +81,6 @@ class Engine {
 
     getNextStage(x, y, w, h){
         let value = false;
-
         if(this.stage){
             const { stage } = this;
             for(let i = 0; i < stage.length; i++){
@@ -128,7 +140,11 @@ class Engine {
 
             if(this.player.nextStage){
                 this.stage = this.player.nextStage;
-                this.newStage();
+                if(this.stage.id === "Death"){
+                    this.resetStage();
+                } else {
+                    this.newStage();
+                }
             }
 
             displayCookies(this.player.cookies);
