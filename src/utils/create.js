@@ -7,7 +7,7 @@ export function createNextStage(engine){
 
     if(engine.stage.id === "Prevstage"){
         stageNum -= 1;
-        pX = 800;
+        pX = 832;
     } else if (engine.stage.id === "Nextstage"){
         stageNum += 1;
         pX = 10;
