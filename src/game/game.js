@@ -3,7 +3,7 @@ import Player from '../characters/player.js';
 // import Camera from './camera';
 import GameMap from '../map/map';
 
-const mapJson = require('../../asset/sprites/maps/stage01.json');
+const mapJson = require('../../asset/sprites/maps/stage1.json');
 
 class Game {
     constructor() {
@@ -15,16 +15,18 @@ class Game {
         // let camera = new Camera([document.getElementById("canvas").width, document.getElementById("canvas").height]);
 
         // engine.phyDebug = true;
-        let map = new GameMap(mapJson, "asset/sprites/maps/stage-tileset.png");
-        engine.addObject(map);
-        engine.addColliders(map.getColliders());
+        let map = new GameMap(mapJson, "asset/sprites/maps/stage-tileset.png", 1);
+        engine.map = map;
         engine.addItems(map.getItems());
+        engine.addColliders(map.getColliders());
+        engine.stage = map.stage;
 
         // engine.offset = camera.offset;
 
-        let player = new Player(0, 0, engine);
+        let player = new Player(10, 0, engine);
         engine.addObject(player);
-        // debugger
+        engine.player = player;
+
         engine.update = (dt) => {
             if (engine.input.isKeyPressed("ArrowLeft")) {
                 player.translate(-150 * dt, 0);
@@ -37,7 +39,6 @@ class Game {
                 player.lastFace = 4;
             }
             if (engine.input.keysPressed.repeat !== "Space" && engine.input.isKeyPressed("Space")){
-                // debugger
                 player.jump();
             }
             if (player.falling){

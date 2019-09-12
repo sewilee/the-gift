@@ -4,7 +4,7 @@ import Box from "../game/box";
 import Item from "../characters/item";
 
 class GameMap extends GameObject {
-    constructor(mapJSON, mapImg) {
+    constructor(mapJSON, mapImg, id) {
         super();
         this.scale = 1;
         this.renderable = new Sprite(mapImg, 640, 640, 20, 20, 0, 400, 0, this.scale);
@@ -12,6 +12,8 @@ class GameMap extends GameObject {
         this.colliders = [];
         this.cookies = [];
         this.position = [0, 0];
+        this.stage = [];
+        this.id = id;
         this.camera = {offset: [0, 0]};
 
         this.drawMap();
@@ -28,13 +30,24 @@ class GameMap extends GameObject {
                 }
                 if (layer.name === "Cookies"){
                     layer.objects.forEach((obj, idx) => {
-                        let speed = idx % 3;
-                        const item = new Item([obj.x, obj.y], [0, 0], "cookie/1", `cookie_${idx}`, speed);
+                        let frame = idx % 3;
+                        const item = new Item([obj.x, obj.y], [0, 0], "cookie/0", `cookie_${idx}`, frame);
                         this.cookies.push(item);
+                    });
+                }
+                if (layer.name === "Nextstage" || layer.name === "Prevstage"){
+                    layer.objects.forEach(obj => {
+                        const box = new Box(obj.x * this.scale, obj.y * this.scale, obj.width * this.scale, obj.height * this.scale);
+                        box.id = layer.name;
+                        this.stage.push(box);
                     });
                 }
             });
         }
+    }
+
+    getStage(){
+        return this.stage;
     }
 
     getItems(){

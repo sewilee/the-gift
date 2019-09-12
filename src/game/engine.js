@@ -1,8 +1,9 @@
 import GameObject from './game_object';
-import Player from '../characters/player';
 import Input from './input';
 import Box from './box';
 import Item from '../characters/item';
+import { displayCookies } from '../utils/display';
+import { createNextStage } from '../utils/create';
 
 class Engine {
     constructor() {
@@ -23,14 +24,25 @@ class Engine {
 
         //
         this.objs = [];
+        this.map;
+        this.player;
         this.colliders = [];
         this.items = {};
 
         //stores key inputs
         this.input = new Input;
         // this.gameStart = true;
-
         window.requestAnimationFrame(this.loop.bind(this));
+    }
+
+    newStage(){
+        this.colliders = [];
+        this.items = {};
+        this.objs = [];
+        this.addObject(this.player);
+        this.player.nextStage = false;
+
+        createNextStage(this);
     }
 
     addObject(obj) {
@@ -54,6 +66,31 @@ class Engine {
         });
     }
 
+    getNextStage(x, y, w, h){
+        let value = false;
+
+        if(this.stage){
+            const { stage } = this;
+            for(let i = 0; i < stage.length; i++){
+                const result = stage[i].isInside(x, y, w, h);
+                if (result === true){
+                    value = stage[i];
+                    return value;
+                }
+            }
+        }
+        return value;
+
+        // if(this.prevStage){
+        //     let result = this.prevStage.isInside(x, y, w, h);
+        //     if (result === true) {
+        //         value = true;
+        //     }
+        // }
+        
+        // return value;
+    }
+
     getItems(x, y, w, h){
         let value = false;
         const items = Object.values(this.items);
@@ -65,6 +102,8 @@ class Engine {
                 item.used = true;
             }
         });
+
+        return value;
     }
 
     getCollision(x, y, w, h) {
@@ -87,9 +126,16 @@ class Engine {
                 this.update(dt);
             }
 
+            if(this.player.nextStage){
+                this.stage = this.player.nextStage;
+                this.newStage();
+            }
+
+            displayCookies(this.player.cookies);
+
             //do drawing here
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            // debugger
+            this.map.draw(this.ctx, this.canvas);
             this.objs.forEach((obj, idx) => {
                 if (obj instanceof Item && obj.used === true) {
                     this.objs.splice(idx, 1);

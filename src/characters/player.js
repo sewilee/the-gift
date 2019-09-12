@@ -18,6 +18,9 @@ class Player extends GameObject {
         this.lastFace = this.facing;
         this.falling = false;
         this.collided = false;
+        this.nextStage = false;
+
+        this.cookies = 0;
 
         this.createSprites();
     }
@@ -60,6 +63,7 @@ class Player extends GameObject {
         this.collided = false;
         let collider = this.engine.getCollision(pX, pY, subWidth, subHeight);
         let itemCollide = this.engine.getItems(pX, pY, subWidth, subHeight);
+        let nextStageCollide = this.engine.getNextStage(pX, pY, subWidth, subHeight);
         
         if(collider){
             if(this.position[1] > collider.y + collider.h){
@@ -77,8 +81,12 @@ class Player extends GameObject {
             }
         }
 
+        if(nextStageCollide){
+            this.nextStage = nextStageCollide;
+        }
+
         if(itemCollide){
-            debugger
+            this.cookies += 1;
         }
 
         if(this.fallY && this.position[1] > this.fallY + 50){
@@ -115,7 +123,6 @@ class Player extends GameObject {
 
         const width = this.renderables[0].subWidth;
         const height = this.renderables[0].subHeight;
-        // debugger
         ctx.save();
         // ctx.strokeRect(this.position[0], this.position[1], width, height);
         ctx.translate(this.position[0], + this.position[1]);
