@@ -2,6 +2,7 @@ import GameObject from "../game/game_object";
 import Sprite from "../game/sprite";
 import Box from "../game/box";
 import Item from "../characters/item";
+import NPC from "../characters/npc";
 
 class GameMap extends GameObject {
     constructor(mapJSON, mapImg, id) {
@@ -42,8 +43,19 @@ class GameMap extends GameObject {
                         this.stage.push(box);
                     });
                 }
+                if (layer.name === "NPC"){
+                    debugger
+                    layer.objects.forEach(obj => {
+                        const npc = new NPC(obj.x, obj.y)
+                        this.npc = npc;
+                    });
+                }
             });
         }
+    }
+
+    getNPC(){
+        return this.npc;
     }
 
     getStage(){

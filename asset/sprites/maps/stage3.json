@@ -315,6 +315,28 @@
         }, 
         {
          "draworder":"topdown",
+         "id":11,
+         "name":"NPC",
+         "objects":[
+                {
+                 "height":64,
+                 "id":126,
+                 "name":"",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":640,
+                 "y":480
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "draworder":"topdown",
          "id":8,
          "name":"Cookies",
          "objects":[
@@ -434,8 +456,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":11,
- "nextobjectid":126,
+ "nextlayerid":12,
+ "nextobjectid":127,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.4",

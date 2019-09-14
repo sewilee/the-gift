@@ -19,6 +19,7 @@ class Game {
         engine.map = map;
         engine.addItems(map.getItems());
         engine.addColliders(map.getColliders());
+        engine.addObject(map.getNPC());
         engine.stage = map.stage;
 
         // engine.offset = camera.offset;
