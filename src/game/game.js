@@ -3,7 +3,7 @@ import Player from '../characters/player.js';
 // import Camera from './camera';
 import GameMap from '../map/map';
 
-const mapJson = require('../../asset/sprites/maps/stage1.json');
+const mapJson = require('../../asset/sprites/maps/stage4.json');
 
 class Game {
     constructor() {
@@ -15,11 +15,11 @@ class Game {
         // let camera = new Camera([document.getElementById("canvas").width, document.getElementById("canvas").height]);
 
         // engine.phyDebug = true;
-        let map = new GameMap(mapJson, "asset/sprites/maps/stage-tileset.png", 1);
+        let map = new GameMap(mapJson, "asset/sprites/maps/stage-tileset.png", 4);
         engine.map = map;
         engine.addItems(map.getItems());
         engine.addColliders(map.getColliders());
-        engine.addObject(map.getNPC());
+        engine.addObject(map.getText());
         engine.stage = map.stage;
 
         // engine.offset = camera.offset;

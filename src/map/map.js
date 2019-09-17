@@ -3,12 +3,13 @@ import Sprite from "../game/sprite";
 import Box from "../game/box";
 import Item from "../characters/item";
 import NPC from "../characters/npc";
+import Text from '../characters/text';
 
 class GameMap extends GameObject {
     constructor(mapJSON, mapImg, id) {
         super();
         this.scale = 1;
-        this.renderable = new Sprite(mapImg, 640, 640, 20, 20, 0, 400, 0, this.scale);
+        this.renderable = new Sprite(mapImg, 1280, 1280, 40, 40, 0, 1600, 0, this.scale);
         this.data = mapJSON;
         this.colliders = [];
         this.cookies = [];
@@ -44,14 +45,24 @@ class GameMap extends GameObject {
                     });
                 }
                 if (layer.name === "NPC"){
-                    debugger
                     layer.objects.forEach(obj => {
                         const npc = new NPC(obj.x, obj.y)
                         this.npc = npc;
                     });
                 }
+                if (layer.name === "text"){
+                    layer.objects.forEach(obj => {
+                        const text = new Text([obj.x, obj.y]);
+                        this.text = text;
+                        // debugger
+                    });
+                }
             });
         }
+    }
+
+    getText(){
+        return this.text;
     }
 
     getNPC(){

@@ -19,7 +19,8 @@ export function createNextStage(engine){
     engine.map = map;
     engine.addItems(map.getItems());
     engine.addColliders(map.getColliders());
-    engine.addObject(map.getNPC());
+    engine.addNPC(map.getNPC());
+    engine.addObject(map.getText());
 
     engine.stage = map.stage;
 

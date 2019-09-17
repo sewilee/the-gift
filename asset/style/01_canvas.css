@@ -7,6 +7,18 @@
     font-family: 'Quicksand', sans-serif;
 }
 
+h2{
+    position: relative;
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    padding: 25px 10px 10px 10px;
+}
+
+main{
+    position: relative;
+}
+
 .canvas-header{
     /* position: relative; */
     display: flex;
@@ -43,36 +55,42 @@
 canvas{
     position: absolute;
     top: 0;
-    left: calc(50% - 224);
+    left: calc(20%);
 }
 
-.footer{
-    padding: 24px;
-    margin: 0 auto;
+
+
+.pop-up{
+    visibility: visible;
+    position: absolute;
+    width: 230px;
+    height: 100px;
+    left: calc(50% - 115px);
+    top: calc(50% - 100px);
     display: flex;
-    width: 250px;
-    justify-content: center;
     flex-direction: column;
-    font-family: 'Quicksand', sans-serif;
+    justify-content: center;
+    border: 1px solid black;
+    padding: 16px;
+    z-index: 10;
+    background-color: white;
 }
 
-.footer section {
-    padding: 8px;
+.pop-out{
+    visibility: hidden;
+}
+
+.pop-up p{
+    padding: 25px;
+}
+
+.button{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+
 }
 
-.footer p, span {
-    color: #484848;
-    font-size: 14px;
-}
-
-.footer a {
-    font-size: 14px;
-    color: rgba(175, 9, 34);
-    text-decoration: none;
-}
-
-.footer a:hover {
-    font-weight: bold;
+button{
+    padding: 10px;
+    border-radius: 5px;
 }

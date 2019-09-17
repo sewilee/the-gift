@@ -31,11 +31,57 @@ class Engine {
 
         this.colliders = [];
         this.items = {};
+        this.npc = {};
+        this.pictures = {};
 
         //stores key inputs
         this.input = new Input;
         // this.gameStart = true;
         window.requestAnimationFrame(this.loop.bind(this));
+    }
+
+    showConversation(){
+        const canvas = document.getElementById("canvas-conversation");
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const mapID = this.map.id;
+        const { pictures, player, npc } = this;
+
+        const img = new Image();
+        if(pictures[mapID]){
+            img.src = pictures[mapID];
+        } else {
+            img.src = `asset/sprites/maps/stage${mapID}_trade.png`
+        }
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0);
+        };
+
+        document.addEventListener('keypress', (e) => {
+            e.preventDefault();
+            if (e.code === "KeyY" && player.cookies >= 30){
+                player.cookies -= 30;
+                img.src = `asset/sprites/maps/stage${mapID}_pic.png`;
+                pictures[mapID] = img.src;
+                img.onload = function () {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                };
+
+                npc[mapID].facing = 2;
+
+            } else if (e.code === "KeyY" && player.cookies < 30){
+                img.src = `asset/sprites/maps/stage${mapID}_cry.png`;
+                img.onload = function () {
+                    ctx.drawImage(img, 0, 0);
+                };
+            }
+            if (e.code !== "KeyY"){
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        });
     }
 
     newStage(){
@@ -49,18 +95,26 @@ class Engine {
     }
 
     resetStage(){
-
         this.player.position = [this.resetPos[0], this.resetPos[1]];
         this.player.cookies = 0;
         this.player.nextStage = false;
         this.stage = this.map.stage;
-
-        return;
     }
 
     addObject(obj) {
         if (obj instanceof GameObject) {
             this.objs.push(obj);
+        }
+    }
+
+    addNPC(npc){
+        if(npc){
+            if(this.npc[this.map.id]){
+                this.objs.push(this.npc[this.map.id]);
+            } else {
+                this.objs.push(npc);
+                this.npc[this.map.id] = npc;
+            }
         }
     }
 
@@ -92,15 +146,6 @@ class Engine {
             }
         }
         return value;
-
-        // if(this.prevStage){
-        //     let result = this.prevStage.isInside(x, y, w, h);
-        //     if (result === true) {
-        //         value = true;
-        //     }
-        // }
-        
-        // return value;
     }
 
     getItems(x, y, w, h){
@@ -118,10 +163,24 @@ class Engine {
         return value;
     }
 
+    getNPC(x, y, w, h){
+        let value = false;
+        const npc = this.npc[this.map.id];
+        if(npc){
+            const npcBox = new Box(npc.position[0], npc.position[1], 32, 64);
+            const result = npcBox.isInside(x, y, w, h);
+            if(result === true){
+                value = npc;
+            }
+        }
+
+        return value;
+    }
+
     getCollision(x, y, w, h) {
         let value = false;
         this.colliders.forEach(collider => {
-            let result = collider.isInside(x, y, w, h);
+            let result = collider.isInside(x + 10, y, w - 20, h);
             if (result === true) {
                 value = collider;
             }
@@ -136,6 +195,10 @@ class Engine {
             //do update here
             if (this.update) {
                 this.update(dt);
+            }
+
+        if (this.player.npc && this.input.isKeyPressed("ArrowUp")){
+                this.showConversation();
             }
 
             if(this.player.nextStage){

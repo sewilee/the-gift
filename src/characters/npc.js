@@ -33,6 +33,7 @@ class NPC extends GameObject {
     }
 
     translate(x, y) {
+
         let pX = x + this.position[0];
         let pY = y + this.position[1];
 
@@ -49,6 +50,9 @@ class NPC extends GameObject {
         // ctx.strokeRect(this.position[0], this.position[1], width, height);
         ctx.translate(this.position[0], + this.position[1]);
 
+        if (this.cookie > 0) {
+            this.faciing = 2;
+        }
         this.renderables[this.facing].draw(ctx)
 
         ctx.restore();

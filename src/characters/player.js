@@ -20,7 +20,7 @@ class Player extends GameObject {
         this.collided = false;
         this.nextStage = false;
 
-        this.cookies = 0;
+        this.cookies = 30;
 
         this.createSprites();
     }
@@ -64,6 +64,7 @@ class Player extends GameObject {
         let collider = this.engine.getCollision(pX, pY, subWidth, subHeight);
         let itemCollide = this.engine.getItems(pX, pY, subWidth, subHeight);
         let nextStageCollide = this.engine.getNextStage(pX, pY, subWidth, subHeight);
+        let npcCollide = this.engine.getNPC(pX, pY, subWidth, subHeight);
 
         if(collider){
             if(this.position[1] > collider.y + collider.h){
@@ -87,6 +88,10 @@ class Player extends GameObject {
 
         if(itemCollide){
             this.cookies += 1;
+        }
+
+        if(npcCollide){
+            this.npc = true;
         }
 
         if(this.fallY && this.position[1] > this.fallY + 50){
