@@ -2,13 +2,13 @@ import Sprite from '../game/sprite';
 import GameObject from '../game/game_object';
 
 class NPC extends GameObject {
-    constructor(x, y) {
+    constructor(x, y, facing) {
         super();
         this.position = [x, y];
         // this.engine = engine;
         // this.offset = offset;
 
-        this.facing = 1;
+        this.facing = facing;
         this.lastFace = this.facing;
 
         this.cookies = 0;
@@ -25,11 +25,11 @@ class NPC extends GameObject {
         const moveCol = 8;
         const moveRow = 3;
     
-        this.renderables = [
-            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 0, 7, 5, scale), //0 jumping
-            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 8, 7, 5, scale), //1 waving
-            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 16, 1, 2, scale), //2 cookie
-        ]
+        this.renderables = {
+            0: new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 16, 1, 2, scale), //cookie
+            3: new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 8, 7, 5, scale), //waving
+            7: new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 8, 7, 5, scale), //waving
+        }
     }
 
     translate(x, y) {
@@ -50,9 +50,6 @@ class NPC extends GameObject {
         // ctx.strokeRect(this.position[0], this.position[1], width, height);
         ctx.translate(this.position[0], + this.position[1]);
 
-        if (this.cookie > 0) {
-            this.faciing = 2;
-        }
         this.renderables[this.facing].draw(ctx)
 
         ctx.restore();

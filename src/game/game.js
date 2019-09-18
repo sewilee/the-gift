@@ -25,6 +25,7 @@ class Game {
         // engine.offset = camera.offset;
 
         let player = new Player(10, 0, engine);
+        player.character = "bunny";
         engine.resetPos = [10, 0];
         engine.addObject(player);
         engine.player = player;

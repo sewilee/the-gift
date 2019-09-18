@@ -69,8 +69,12 @@ class Engine {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.drawImage(img, 0, 0);
                 };
-
-                npc[mapID].facing = 2;
+                if(mapID === 3){
+                    player.character = "banker";
+                } else if (mapID === 7){
+                    player.character = "fire";
+                }
+                npc[mapID].facing = 0;
 
             } else if (e.code === "KeyY" && player.cookies < 30){
                 img.src = `asset/sprites/maps/stage${mapID}_cry.png`;
@@ -168,7 +172,7 @@ class Engine {
         const npc = this.npc[this.map.id];
         if(npc){
             const npcBox = new Box(npc.position[0], npc.position[1], 32, 64);
-            const result = npcBox.isInside(x, y, w, h);
+            const result = npcBox.isInside(x + 10, y, w - 20, h);
             if(result === true){
                 value = npc;
             }
@@ -180,7 +184,7 @@ class Engine {
     getCollision(x, y, w, h) {
         let value = false;
         this.colliders.forEach(collider => {
-            let result = collider.isInside(x + 10, y, w - 20, h);
+            let result = collider.isInside(x, y, w, h);
             if (result === true) {
                 value = collider;
             }

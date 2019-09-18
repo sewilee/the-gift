@@ -16,6 +16,8 @@ class Player extends GameObject {
 
         this.facing = 0;
         this.lastFace = this.facing;
+        this.character;
+
         this.falling = false;
         this.collided = false;
         this.nextStage = false;
@@ -26,22 +28,47 @@ class Player extends GameObject {
     }
     
     createSprites(){
-        const moveImg = "asset/sprites/characters/bunny_player_moves.png";
         const scale = 1;
 
-        const moveW = 280;
-        const moveH = 320;
-        const moveCol = 7;
-        const moveRow = 4;
+        const bunnyImg = "asset/sprites/characters/bunny_player_moves.png";
+        const bunnyW = 280;
+        const bunnyH = 320;
+        const bunnyCol = 7;
+        const bunnyRow = 4;
+
+        const bankImg = "asset/sprites/characters/banker_player_moves.png";
+        const bankW = 280;
+        const bankH = 320;
+        const bankCol = 7;
+        const bankRow = 4;
+
+        this.renderables = {
+            bunny: [
+                new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 0, 6, 25, scale), //0 left
+                new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 7, 6, 25, scale), //1 right
+                new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 14, 6, 2, scale), //2 still with cookie
+                new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 23, 1, 2, scale), //3 standing left
+                new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 21, 1, 2, scale), //4 standing right
+                new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 25, 1, 5, scale), //5 falling
+            ],
+            banker: [
+                new Sprite(bankImg, bankW, bankH, bankCol, bankRow, 0, 5, 5, scale), //0 left
+                new Sprite(bankImg, bankW, bankH, bankCol, bankRow, 7, 5, 5, scale), //1 right
+                new Sprite(bankImg, bankW, bankH, bankCol, bankRow, 14, 1, 2, scale), //2 still with cookie
+                new Sprite(bankImg, bankW, bankH, bankCol, bankRow, 1, 0, 5, scale), //3 standing left
+                new Sprite(bankImg, bankW, bankH, bankCol, bankRow, 7, 0, 5, scale), //4 standing right
+                new Sprite(bankImg, bankW, bankH, bankCol, bankRow, 16, 1, 5, scale) //5 falling
+            ]
+        }
     
-        this.renderables = [
-            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 0, 6, 25, scale), //0 left
-            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 7, 6, 25, scale), //1 right
-            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 14, 6, 2, scale), //2 still with cookie
-            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 23, 1, 2, scale), //3 standing left
-            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 21, 1, 2, scale), //4 standing right
-            new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 25, 1, 5, scale), //5 falling
-        ]
+        // this.renderables = [
+        //     new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 0, 6, 25, scale), //0 left
+        //     new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 7, 6, 25, scale), //1 right
+        //     new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 14, 6, 2, scale), //2 still with cookie
+        //     new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 23, 1, 2, scale), //3 standing left
+        //     new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 21, 1, 2, scale), //4 standing right
+        //     new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 25, 1, 5, scale), //5 falling
+        // ]
     }
 
     jump(){
@@ -57,8 +84,8 @@ class Player extends GameObject {
         let pX = x + this.position[0];
         let pY = y + this.position[1];
 
-        let subWidth = this.renderables[0].subWidth;
-        let subHeight = this.renderables[0].subHeight - 5;
+        let subWidth = this.renderables[this.character][0].subWidth;
+        let subHeight = this.renderables[this.character][0].subHeight - 5;
         
         this.collided = false;
         let collider = this.engine.getCollision(pX, pY, subWidth, subHeight);
@@ -67,7 +94,7 @@ class Player extends GameObject {
         let npcCollide = this.engine.getNPC(pX, pY, subWidth, subHeight);
 
         if(collider){
-            if(this.position[1] > collider.y + collider.h){
+            if(this.position[1] >= collider.y + collider.h){
                 y = 0;
             } else if(  this.position[0] > collider.x + collider.w || 
                         this.position[0] + subWidth < collider.x) {
@@ -126,13 +153,13 @@ class Player extends GameObject {
 
         this.gravity();
 
-        const width = this.renderables[0].subWidth;
-        const height = this.renderables[0].subHeight;
+        // const width = this.renderables[0].subWidth;
+        // const height = this.renderables[0].subHeight;
         ctx.save();
         // ctx.strokeRect(this.position[0], this.position[1], width, height);
         ctx.translate(this.position[0], + this.position[1]);
 
-        this.renderables[this.facing].draw(ctx)
+        this.renderables[this.character][this.facing].draw(ctx)
 
         ctx.restore();
     }

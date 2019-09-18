@@ -46,7 +46,7 @@ class GameMap extends GameObject {
                 }
                 if (layer.name === "NPC"){
                     layer.objects.forEach(obj => {
-                        const npc = new NPC(obj.x, obj.y)
+                        const npc = new NPC(obj.x, obj.y, this.id)
                         this.npc = npc;
                     });
                 }
