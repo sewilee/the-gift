@@ -6,7 +6,7 @@ export const displayCookies = (cookieNum, keyNum) => {
     cookieIMG.src = "asset/sprites/items/items.png";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(cookieIMG, 32, 0, 32, 32, 32, 0, 32, 32);
-    ctx.font = "20px Georgia";
+    ctx.font = "20px monospace";
     ctx.fillText(cookieNum, 80, 20);
 
     ctx.drawImage(cookieIMG, 0, 32, 32, 32, 128, 0, 32, 32);

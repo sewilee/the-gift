@@ -40,6 +40,18 @@ class Engine {
         window.requestAnimationFrame(this.loop.bind(this));
     }
 
+    endGame(img){
+        img.src = `asset/sprites/maps/stage${this.map.id}_pic.png`;
+        pictures[this.map.id] = img.src;
+
+        img.onload = function () {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
+        };
+
+        // this.showNPC = false;
+    }
+
     showConversation(){
         const canvas = document.getElementById("canvas-conversation");
         const ctx = canvas.getContext('2d');
@@ -49,7 +61,6 @@ class Engine {
         const { pictures, player, npc, map } = this;
 
         let img = new Image();
-        console.log(map.id);
         if(pictures[map.id]){
             img.src = pictures[map.id];
         } else {
@@ -65,15 +76,7 @@ class Engine {
                 if(this.showNPC && e.code === "KeyY" && player.key === 3){
                     player.key -= 3;
                     npc[this.map.id].keys += 3;
-                    img.src = `asset/sprites/maps/stage${this.map.id}_pic.png`;
-                    pictures[this.map.id] = img.src;
-    
-                    img.onload = function () {
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-                        ctx.drawImage(img, 0, 0);
-                    };
-    
-                    this.showNPC = false;
+                    this.endGame(img);
                 }
                 if (this.showNPC && e.code === "KeyY" && npc[this.map.id].keys === 0) {
                     img.src = `asset/sprites/maps/stage${this.map.id}_cry.png`;
@@ -115,6 +118,7 @@ class Engine {
 
             if (e.code !== "KeyY"){
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+                this.showNPC = false;
             }
         });
     }
@@ -131,7 +135,11 @@ class Engine {
 
     resetStage(){
         this.player.position = [this.resetPos[0], this.resetPos[1]];
-        this.player.cookies = 0;
+        if(this.player.cookies <= 10){
+            this.player.cookies = 0;
+        } else {
+            this.player.cookies -= 10;
+        }
         this.player.nextStage = false;
         this.stage = this.map.stage;
     }
@@ -235,6 +243,7 @@ class Engine {
         if (this.player.npc && this.input.isKeyPressed("ArrowUp")){
                 this.showNPC = true;
                 this.showConversation();
+                this.player.npc = false;
             }
 
             if(this.player.nextStage){
