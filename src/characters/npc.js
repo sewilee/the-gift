@@ -12,6 +12,7 @@ class NPC extends GameObject {
         this.lastFace = this.facing;
 
         this.cookies = 0;
+        this.keys = 0;
 
         this.createSprites();
     }
@@ -27,8 +28,10 @@ class NPC extends GameObject {
     
         this.renderables = {
             0: new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 16, 1, 2, scale), //cookie
-            3: new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 8, 7, 5, scale), //waving
-            7: new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 8, 7, 5, scale), //waving
+            3: new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 8, 7, 5, scale), //stage03
+            7: new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 0, 7, 10, scale), //stage07
+            8: new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 18, 2, 5, scale), //stage08
+            10: new Sprite(moveImg, moveW, moveH, moveCol, moveRow, 21, 2, 1, scale), //stage10
         }
     }
 

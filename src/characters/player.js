@@ -22,7 +22,8 @@ class Player extends GameObject {
         this.collided = false;
         this.nextStage = false;
 
-        this.cookies = 30;
+        this.cookies = 0;
+        this.key = 0;
 
         this.createSprites();
     }
@@ -42,6 +43,12 @@ class Player extends GameObject {
         const bankCol = 7;
         const bankRow = 4;
 
+        const fireImg = "asset/sprites/characters/fire_player_moves.png";
+        const fireW = 280;
+        const fireH = 320;
+        const fireCol = 7;
+        const fireRow = 4;
+
         this.renderables = {
             bunny: [
                 new Sprite(bunnyImg, bunnyW, bunnyH, bunnyCol, bunnyRow, 0, 6, 25, scale), //0 left
@@ -58,6 +65,14 @@ class Player extends GameObject {
                 new Sprite(bankImg, bankW, bankH, bankCol, bankRow, 1, 0, 5, scale), //3 standing left
                 new Sprite(bankImg, bankW, bankH, bankCol, bankRow, 7, 0, 5, scale), //4 standing right
                 new Sprite(bankImg, bankW, bankH, bankCol, bankRow, 16, 1, 5, scale) //5 falling
+            ],
+            fireFighter: [
+                new Sprite(fireImg, fireW, fireH, fireCol, fireRow, 0, 3, 5, scale), //0 left
+                new Sprite(fireImg, fireW, fireH, fireCol, fireRow, 7, 3, 5, scale), //1 right
+                new Sprite(fireImg, fireW, fireH, fireCol, fireRow, 14, 1, 2, scale), //2 still with cookie
+                new Sprite(fireImg, fireW, fireH, fireCol, fireRow, 1, 0, 5, scale), //3 standing left
+                new Sprite(fireImg, fireW, fireH, fireCol, fireRow, 7, 0, 5, scale), //4 standing right
+                new Sprite(fireImg, fireW, fireH, fireCol, fireRow, 16, 1, 5, scale) //5 falling
             ]
         }
     

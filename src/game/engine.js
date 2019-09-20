@@ -2,7 +2,7 @@ import GameObject from './game_object';
 import Input from './input';
 import Box from './box';
 import Item from '../characters/item';
-import { displayCookies } from '../utils/display';
+import { displayCookies, displayKey } from '../utils/display';
 import { createNextStage } from '../utils/create';
 
 class Engine {
@@ -46,14 +46,14 @@ class Engine {
         ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        const mapID = this.map.id;
-        const { pictures, player, npc } = this;
+        const { pictures, player, npc, map } = this;
 
-        const img = new Image();
-        if(pictures[mapID]){
-            img.src = pictures[mapID];
+        let img = new Image();
+        console.log(map.id);
+        if(pictures[map.id]){
+            img.src = pictures[map.id];
         } else {
-            img.src = `asset/sprites/maps/stage${mapID}_trade.png`
+            img.src = `asset/sprites/maps/stage${map.id}_trade.png`
         }
         img.onload = function () {
             ctx.drawImage(img, 0, 0);
@@ -61,27 +61,58 @@ class Engine {
 
         document.addEventListener('keypress', (e) => {
             e.preventDefault();
-            if (e.code === "KeyY" && player.cookies >= 30){
+            if(this.map.id === 10){
+                if(this.showNPC && e.code === "KeyY" && player.key === 3){
+                    player.key -= 3;
+                    npc[this.map.id].keys += 3;
+                    img.src = `asset/sprites/maps/stage${this.map.id}_pic.png`;
+                    pictures[this.map.id] = img.src;
+    
+                    img.onload = function () {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                    };
+    
+                    this.showNPC = false;
+                }
+                if (this.showNPC && e.code === "KeyY" && npc[this.map.id].keys === 0) {
+                    img.src = `asset/sprites/maps/stage${this.map.id}_cry.png`;
+                    img.onload = function () {
+                        ctx.drawImage(img, 0, 0);
+                    };
+                    this.showNPC = false;
+                }
+            }
+            if (this.showNPC && e.code === "KeyY" && player.cookies >= 30){
                 player.cookies -= 30;
-                img.src = `asset/sprites/maps/stage${mapID}_pic.png`;
-                pictures[mapID] = img.src;
+                player.key += 1;
+                npc[this.map.id].cookies += 30;
+                img.src = `asset/sprites/maps/stage${this.map.id}_pic.png`;
+                pictures[this.map.id] = img.src;
+                
                 img.onload = function () {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.drawImage(img, 0, 0);
                 };
-                if(mapID === 3){
+                
+                if(this.map.id === 3){
                     player.character = "banker";
-                } else if (mapID === 7){
-                    player.character = "fire";
+                } else if (this.map.id === 7){
+                    player.character = "fireFighter";
                 }
-                npc[mapID].facing = 0;
+                npc[this.map.id].facing = 0;
 
-            } else if (e.code === "KeyY" && player.cookies < 30){
-                img.src = `asset/sprites/maps/stage${mapID}_cry.png`;
+                this.showNPC = false;
+            }
+
+            if (this.showNPC && e.code === "KeyY" && npc[this.map.id].cookies === 0){
+                img.src = `asset/sprites/maps/stage${this.map.id}_cry.png`;
                 img.onload = function () {
                     ctx.drawImage(img, 0, 0);
                 };
+                this.showNPC = false;
             }
+
             if (e.code !== "KeyY"){
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
@@ -202,6 +233,7 @@ class Engine {
             }
 
         if (this.player.npc && this.input.isKeyPressed("ArrowUp")){
+                this.showNPC = true;
                 this.showConversation();
             }
 
@@ -214,7 +246,8 @@ class Engine {
                 }
             }
 
-            displayCookies(this.player.cookies);
+            displayCookies(this.player.cookies, this.player.key);
+            // displayKey(this.player.key);
 
             //do drawing here
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
